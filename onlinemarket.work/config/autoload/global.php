@@ -12,5 +12,10 @@
  */
 
 return array(
-    // ...
+    'service_manager' => array(
+        'services' => array(
+            'application-who-wins' => 'WHO WINS: ' . __FILE__,    
+            'application-who-adds' => ['C' => 'WHO ADDS: ' . __FILE__],    
+        ),
+    ),
 );

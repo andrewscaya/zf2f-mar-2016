@@ -11,6 +11,8 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\EventManager\GlobalEventManager;
+use Zend\EventManager\AbstractListenerAggregate;
 
 class Module
 {
@@ -20,12 +22,21 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         $eventManager->attach(MvcEvent::EVENT_DISPATCH, [$this, 'onDispatch'], 100);
+        //$sharedMgr = $eventManager->getSharedManager();
+        //$sharedMgr->attach('*', 'whatever', [$this, 'whateverListener']);
+        GlobalEventManager::attach('whatever', [$this, 'whateverListener']);
     }
 
+    public function whateverListener($e)
+    {
+        echo '<br>' . __METHOD__ . ':' . $e->getParam('abc');
+    }
+    
     public function onDispatch(MvcEvent $e)
     {
+        $sm = $e->getApplication()->getServiceManager();
         $viewModel = $e->getViewModel();
-        $viewModel->setVariable('categories', 'CATEGORY LIST');
+        $viewModel->setVariable('categories', $sm->get('categories'));
     }
     
     public function getConfig()
@@ -43,4 +54,25 @@ class Module
             ),
         );
     }
+    
+    public function getServiceConfig()
+    {
+        return [
+            'initializers' => [
+                'application-test-1' => function ($instance, $sm) {
+                    if ($instance instanceof AbstractListenerAggregate) {
+                        echo '<br>' . get_class($instance);
+                    }
+                },
+                'application-test-2' => function ($instance, $sm) {
+                    //echo '<br>#2 ran also!';
+                }
+            ],    
+            'services' => [
+                'application-who-wins' => 'WHO WINS: ' . __FILE__,    
+                'application-who-adds' => ['A' => 'WHO ADDS: ' . __FILE__],    
+            ],
+       ];
+    }
+    
 }

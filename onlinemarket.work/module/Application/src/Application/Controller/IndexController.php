@@ -11,15 +11,23 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\EventManager\GlobalEventManager;
 
 class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
         echo '<br>' . __METHOD__;
-        $em = $this->getEventManager();
-        $em->setIdentifiers('xyz');
-        $em->trigger('whatever', $this, ['abc' => 'ABC']);
+        //$em = $this->getEventManager();
+        //$em->setIdentifiers('xyz');
+        GlobalEventManager::trigger('whatever', $this, ['abc' => 'GLOBAL']);
+        $today = $this->getServiceLocator()->get('application-date');
+        $tomorrow = $this->getServiceLocator()->get('application-date');
+        $tomorrow->add(new \DateInterval('P1D'));
+        echo '<br>' . $today->format('Y-m-d H:i:s');
+        echo '<br>' . $tomorrow->format('Y-m-d H:i:s');
+        echo '<br>' . $this->getServiceLocator()->get('application-who-wins');
+        \Zend\Debug\Debug::dump($this->getServiceLocator()->get('application-who-adds'));
         return new ViewModel();
     }
 }

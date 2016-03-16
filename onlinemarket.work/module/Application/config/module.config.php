@@ -62,6 +62,34 @@ return array(
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
         ),
+        'invokables' => array(
+            'application-date' => 'DateTime',
+        ),
+        'shared' => array(
+            'application-date' => FALSE,
+        ),
+        'services' => array(
+            'application-who-wins' => 'WHO WINS: ' . __FILE__,    
+            'application-who-adds' => ['B' => 'WHO ADDS: ' . __FILE__],    
+            'categories' => [
+                'barter',
+                'beauty',
+                'clothing',
+                'computer',
+                'entertainment',
+                'free',
+                'garden',
+                'general',
+                'health',
+                'household',
+                'phones',
+                'property',
+                'sporting',
+                'tools',
+                'transportation',
+                'wanted'
+            ],
+        ),
     ),
     'translator' => array(
         'locale' => 'en_US',

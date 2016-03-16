@@ -45,7 +45,9 @@
         </nav>
         <div class="container">
             <div class="col-lg-2">
-            <?php echo $this->categories; ?>
+            <?php if (isset($this->categories)) : ?>
+            <?php echo $this->htmlList($this->categories); ?>
+            <?php endif; ?>
             </div>
             <div class="col-lg-8">
             <?php echo $this->content; ?>
