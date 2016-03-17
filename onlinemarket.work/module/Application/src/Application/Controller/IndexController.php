@@ -27,7 +27,8 @@ class IndexController extends AbstractActionController
         echo '<br>' . $today->format('Y-m-d H:i:s');
         echo '<br>' . $tomorrow->format('Y-m-d H:i:s');
         echo '<br>' . $this->getServiceLocator()->get('application-who-wins');
-        \Zend\Debug\Debug::dump($this->getServiceLocator()->get('application-who-adds'));
+        echo '<br>' . $this->getServiceLocator()->get('application-test');
+        \Zend\Debug\Debug::dump($this->getServiceLocator()->get('ApplicationConfig'));
         return new ViewModel();
     }
 }

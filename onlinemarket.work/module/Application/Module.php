@@ -47,6 +47,9 @@ class Module
     public function getAutoloaderConfig()
     {
         return array(
+            'Zend\Loader\ClassMapAutoloader' => array(
+                __DIR__ . '/autoload_classmap.php'
+            ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
@@ -61,7 +64,7 @@ class Module
             'initializers' => [
                 'application-test-1' => function ($instance, $sm) {
                     if ($instance instanceof AbstractListenerAggregate) {
-                        echo '<br>' . get_class($instance);
+                        //echo '<br>' . get_class($instance);
                     }
                 },
                 'application-test-2' => function ($instance, $sm) {
@@ -72,7 +75,10 @@ class Module
                 'application-who-wins' => 'WHO WINS: ' . __FILE__,    
                 'application-who-adds' => ['A' => 'WHO ADDS: ' . __FILE__],    
             ],
-       ];
+            'factories' => [
+                'application-test' => function ($sm) { return 2+2; },
+            ],
+        ];
     }
     
 }
