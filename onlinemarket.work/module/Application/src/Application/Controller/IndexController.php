@@ -24,11 +24,13 @@ class IndexController extends AbstractActionController
         $today = $this->getServiceLocator()->get('application-date');
         $tomorrow = $this->getServiceLocator()->get('application-date');
         $tomorrow->add(new \DateInterval('P1D'));
+        echo '<br>' . $this->url()->fromRoute('search-test', ['name' => 'TEST']);
         echo '<br>' . $today->format('Y-m-d H:i:s');
         echo '<br>' . $tomorrow->format('Y-m-d H:i:s');
         echo '<br>' . $this->getServiceLocator()->get('application-who-wins');
         echo '<br>' . $this->getServiceLocator()->get('application-test');
         \Zend\Debug\Debug::dump($this->getServiceLocator()->get('ApplicationConfig'));
-        return new ViewModel();
+        $test = $this->params()->fromQuery('test');
+        return new ViewModel(['test' => $test]);
     }
 }

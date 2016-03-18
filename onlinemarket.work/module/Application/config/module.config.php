@@ -54,6 +54,11 @@ return array(
             ),
         ),
     ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'showDate' => 'Application\Plugin\ShowDate',
+        ),
+    ),
     'service_manager' => array(
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
