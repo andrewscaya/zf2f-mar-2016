@@ -12,10 +12,10 @@ namespace Application;
 return array(
     'router' => array(
         'routes' => array(
-            'home' => array(
+            'application-home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/',
+                    'route'    => '/app',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
                         'action'     => 'index',

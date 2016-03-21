@@ -1,3 +1,4 @@
-<strong>Module:</strong>        Market &raquo;
-<strong>Controller:</strong>    Skeleton &raquo;
-<strong>Action:</strong>        index
+<h1>Market Home</h1>
+<?php if (isset($this->messages) && !empty($this->messages)) : ?>
+<?php echo $this->htmlList($this->messages); ?>
+<?php endif; ?>

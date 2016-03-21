@@ -12,21 +12,15 @@ namespace Market\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class ViewController extends AbstractActionController
+class PostController extends AbstractActionController
 {
+    protected $categories;
     public function indexAction()
     {
-        $category = $this->params()->fromRoute('category');
-        return new ViewModel(['category' => $category]);
+        return new ViewModel(['categories' => $this->categories]);
     }
-
-    public function itemAction()
+    public function setCategories(array $categories)
     {
-        $itemId = $this->params()->fromRoute('itemId');
-        if (!$itemId) {
-            $this->flashMessenger()->addMessage('Item Not Found');
-            return $this->redirect()->toRoute('market');
-        }
-        return new ViewModel(['itemId' => $itemId]);
+        $this->categories = $categories;
     }
 }
