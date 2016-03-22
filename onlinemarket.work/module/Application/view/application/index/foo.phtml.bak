@@ -1,0 +1,5 @@
+<ul>
+<li>A: <?= $this->apple ?></li>
+<li>B: <?= $this->banana ?></li>
+</ul>
+<?= get_class($this); ?>

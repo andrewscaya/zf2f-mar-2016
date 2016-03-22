@@ -1,5 +1,10 @@
 <?php
 return array(
+    'view_helpers' => array(
+        'invokables' => array(
+            'leftLinks' => 'Market\Helper\LeftLinks',
+        ),
+    ),
     'controllers' => array(
         'invokables' => array(
             'market-index-controller' => 'Market\Controller\IndexController',
@@ -41,6 +46,9 @@ return array(
                             'route'    => '/main[/:category]',
                             'defaults' => array('action'=> 'index','category' => 'free'),
                             // @TODO: establish constraints
+                            'constraints' => array(
+                                'category' => '[a-zA-Z0-9]*', 
+                            ),
                         ),
                     ),
                     'item' => array(
