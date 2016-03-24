@@ -14,10 +14,12 @@ use Zend\View\Model\ViewModel;
 
 class ViewController extends AbstractActionController
 {
+    protected $adapter;
     public function indexAction()
     {
         $category = $this->params()->fromRoute('category');
-        return new ViewModel(['category' => $category]);
+        $list = $this->adapter->query('SELECT * FROM listings WHERE category = ?', [$category]);
+        return new ViewModel(['category' => $category, 'list' => $list]);
     }
 
     public function itemAction()
@@ -29,4 +31,20 @@ class ViewController extends AbstractActionController
         }
         return new ViewModel(['itemId' => $itemId]);
     }
+    /**
+     * @return the $adapter
+     */
+    public function getAdapter()
+    {
+        return $this->adapter;
+    }
+
+ /**
+     * @param field_type $adapter
+     */
+    public function setAdapter($adapter)
+    {
+        $this->adapter = $adapter;
+    }
+
 }

@@ -15,14 +15,47 @@ use Zend\View\Model\ViewModel;
 class PostController extends AbstractActionController
 {
     protected $categories;
+    protected $postForm;
     public function indexAction()
     {
-        $viewModel = new ViewModel(['categories' => $this->categories]);
-        $viewModel->setTemplate('market/post/invalid.phtml');
+        $data = array();
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            // TODO: filtering / validation
+            $this->postForm->setData($data);
+            if ($this->postForm->isValid()) {
+                // insert into the database
+                // display success message
+                // redirect
+            }
+        }
+        $viewModel = new ViewModel([
+            'categories' => $this->categories, 
+            'postForm' => $this->postForm,
+            'data' => $data
+        ]);
+        //$viewModel->setTemplate('market/post/invalid.phtml');
         return $viewModel;
     }
     public function setCategories(array $categories)
     {
         $this->categories = $categories;
     }
+    
+    /**
+     * @return the $postForm
+     */
+    public function getPostForm()
+    {
+        return $this->postForm;
+    }
+
+ /**
+     * @param field_type $postForm
+     */
+    public function setPostForm($postForm)
+    {
+        $this->postForm = $postForm;
+    }
+
 }

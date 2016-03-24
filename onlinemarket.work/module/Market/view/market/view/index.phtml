@@ -1,1 +1,4 @@
-<h1><?php echo $this->escapehtml($this->category); ?></h1>
+<h1><?php echo $this->escapehtml(ucfirst($this->category)); ?></h1>
+<?php foreach ($this->list as $item) : ?>
+<?php Zend\Debug\Debug::dump($item); ?>
+<?php endforeach; ?>

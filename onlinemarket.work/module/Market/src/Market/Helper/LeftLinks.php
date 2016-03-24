@@ -6,8 +6,15 @@ class LeftLinks extends AbstractHelper
 {
     public function __invoke($categories, $prefix)
     {
-        // TODO: loop through the categories
-        //       <li><a href="/market/view/main/<category>">category</a></li>
-        return $prefix . ':' . var_export($categories, TRUE);
+        $output = '';
+        if (is_array($categories) && count($categories)) {
+            $output .= '<ul>';
+            foreach ($categories as $item) {
+                $href = str_replace('//', '/', $prefix . '/' . $item);
+                $output .= sprintf('<li><a href="%s">%s</a></li>', $href, ucfirst($item));
+            }
+            $output .= '</ul>';
+        }
+        return $output;
     }
 }

@@ -1,5 +1,11 @@
 <?php
 return array(
+    'service_manager' => array(
+        'factories' => array(
+            'market-post-form' => 'Market\Factory\PostFormFactory',    
+            'market-post-filter' => 'Market\Factory\PostFilterFactory',    
+        ),
+    ),
     'view_helpers' => array(
         'invokables' => array(
             'leftLinks' => 'Market\Helper\LeftLinks',
@@ -8,10 +14,10 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'market-index-controller' => 'Market\Controller\IndexController',
-            'market-view-controller' => 'Market\Controller\ViewController',
         ),
         'factories' => array(
             'market-post-controller' => 'Market\Factory\PostControllerFactory',
+            'market-view-controller' => 'Market\Factory\ViewControllerFactory',
         ),
         'aliases' => array(
             'alt' => 'market-view-controller',  
