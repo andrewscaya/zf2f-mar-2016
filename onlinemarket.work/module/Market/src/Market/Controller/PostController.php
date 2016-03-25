@@ -16,6 +16,7 @@ class PostController extends AbstractActionController
 {
     protected $categories;
     protected $postForm;
+    use ListingsTableTrait;
     public function indexAction()
     {
         $data = array();

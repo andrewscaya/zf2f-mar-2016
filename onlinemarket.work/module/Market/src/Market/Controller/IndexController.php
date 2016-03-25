@@ -14,6 +14,7 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
+    use ListingsTableTrait;
     public function indexAction()
     {
         $messages = array();

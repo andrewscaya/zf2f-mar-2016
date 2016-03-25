@@ -7,11 +7,14 @@ use Market\Form\PostFilter;
 
 class PostFilterFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceManager)
+    public function createService(ServiceLocatorInterface $sm)
     {
         $filter = new PostFilter();
-        $filter->setCategories($serviceManager->get('categories'));
-        $filter->buildFilters();
+        $categories = $sm->get('application-categories');
+        $filter->setCategories($categories);
+        $filter->setExpireDays($sm->get('market-expire-days'));
+        $filter->setCities($sm->get('market-cities'));
+        $filter->buildFilter();
         return $filter;
     }
 }

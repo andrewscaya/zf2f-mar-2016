@@ -7,12 +7,16 @@ use Market\Controller\PostController;
 
 class PostControllerFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $controllerManager)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $serviceManager = $controllerManager->getServiceLocator();
+        $sm = $serviceLocator->getServiceLocator();
         $controller = new PostController();
-        $controller->setCategories($serviceManager->get('categories'));
-        $controller->setPostForm($serviceManager->get('market-post-form'));
+        $categories = $sm->get('application-categories');
+        $controller->setCategories($categories);
+        // inject form into controller
+        $controller->setPostForm($sm->get('market-form-post'));
+        $controller->setListingsTable($sm->get('market-listings-table'));
+        $controller->setSession($sm->get('application-session'));
         return $controller;
     }
 }

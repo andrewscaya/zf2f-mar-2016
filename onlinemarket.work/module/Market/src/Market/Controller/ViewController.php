@@ -15,10 +15,11 @@ use Zend\View\Model\ViewModel;
 class ViewController extends AbstractActionController
 {
     protected $adapter;
+    use ListingsTableTrait;
     public function indexAction()
     {
         $category = $this->params()->fromRoute('category');
-        $list = $this->adapter->query('SELECT * FROM listings WHERE category = ?', [$category]);
+        $list = $this->getListingsTable()->getListingsByCategory($category);
         return new ViewModel(['category' => $category, 'list' => $list]);
     }
 
@@ -29,7 +30,8 @@ class ViewController extends AbstractActionController
             $this->flashMessenger()->addMessage('Item Not Found');
             return $this->redirect()->toRoute('market');
         }
-        return new ViewModel(['itemId' => $itemId]);
+        $item = $this->getListingsTable()->getListingsById($itemId);
+        return new ViewModel(['itemId' => $itemId, 'item' => $item]);
     }
     /**
      * @return the $adapter

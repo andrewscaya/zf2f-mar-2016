@@ -1,118 +1,152 @@
 <?php
-return array(
-    'service_manager' => array(
-        'factories' => array(
-            'market-post-form' => 'Market\Factory\PostFormFactory',    
-            'market-post-filter' => 'Market\Factory\PostFilterFactory',    
-        ),
-    ),
-    'view_helpers' => array(
-        'invokables' => array(
-            'leftLinks' => 'Market\Helper\LeftLinks',
-        ),
-    ),
-    'controllers' => array(
-        'invokables' => array(
-            'market-index-controller' => 'Market\Controller\IndexController',
-        ),
-        'factories' => array(
-            'market-post-controller' => 'Market\Factory\PostControllerFactory',
-            'market-view-controller' => 'Market\Factory\ViewControllerFactory',
-        ),
-        'aliases' => array(
-            'alt' => 'market-view-controller',  
-        ),
-    ),
-    'router' => array(
-        'routes' => array(
-            'home' => array(
-                'type'    => 'Literal',
-                'options' => array(
+return [
+    'controllers' => [
+        'factories' => [
+            'market-index-controller'  => 'Market\Factory\IndexControllerFactory',
+            'market-view-controller'   => 'Market\Factory\ViewControllerFactory',
+            'market-post-controller'   => 'Market\Factory\PostControllerFactory',
+            'market-delete-controller' => 'Market\Factory\DeleteControllerFactory',
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            'market-form-post'      => 'Market\Factory\PostFormFactory',
+            'market-form-delete'    => 'Market\Factory\DeleteFormFactory',
+            'market-filter-post'    => 'Market\Factory\PostFilterFactory',
+            'market-filter-delete'  => 'Market\Factory\DeleteFilterFactory',
+            'market-listings-table' => 'Market\Factory\ListingsTableFactory',
+        ],
+        'services' => [
+            'market-expire-days' => [ 
+                0  => 'Never', 
+                1  => 'Tomorrow', 
+                7  => 'Week', 
+                30 => 'Month'
+            ],
+            'market-cities' => [
+                'Paris,FR'     => 'Paris',
+                'London,UK'    => 'London',
+                'New York,US'  => 'New York',
+                'Berlin,DE'    => 'Berlin'
+            ],
+            'market-captcha-options' => [
+                'expiration' => 300,
+                'font'		=> '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf',
+                'fontSize'	=> 24,
+                'height'	=> 50,
+                'width'		=> 200,
+                'imgDir'	=> __DIR__ . '/../../../public/captcha',
+                'imgUrl'	=> '/captcha',    	
+            ],
+        ],
+    ],
+    'router' => [
+        'routes' => [
+            'home' => [
+                'type'    => 'Zend\Mvc\Router\Http\Literal',
+                'options' => [
                     'route'    => '/',
-                    'defaults' => array(
+                    'defaults' => [
                         'controller'    => 'market-index-controller',
                         'action'        => 'index',
-                    ),
-                ),
-            ),
-            'market-view' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/market/view',
-                    'defaults' => array(
-                        'controller'    => 'market-view-controller',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'main' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/main[/:category]',
-                            'defaults' => array('action'=> 'index','category' => 'free'),
-                            // @TODO: establish constraints
-                            'constraints' => array(
-                                'category' => '[a-zA-Z0-9]*', 
-                            ),
-                        ),
-                    ),
-                    'item' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/item[/:itemId]',
-                            'defaults' => array('action'=> 'item','itemId' => 1),
-                            // @TODO: establish constraints
-                        ),
-                    ),
-                ),
-            ),
-            'market-post' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/market/post',
-                    'defaults' => array(
-                        'controller'    => 'market-post-controller',
-                        'action'        => 'index',
-                    ),
-                ),
-            ),
-            'market' => array(
-                'type'    => 'Literal',
-                'options' => array(
+                        'module'        => 'market',
+                    ],
+                ],
+            ],
+            'market' => [
+                'type'    => 'Zend\Mvc\Router\Http\Literal',
+                'options' => [
                     'route'    => '/market',
-                    'defaults' => array(
+                    'defaults' => [
                         'controller'    => 'market-index-controller',
                         'action'        => 'index',
-                    ),
-                ),
-            ),
-        ),
-    ),
-            /*
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    // This route is a sane default when developing a module;
-                    // as you solidify the routes for your module, however,
-                    // you may want to remove it and replace it with more
-                    // specific routes.
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
-                */
-    'view_manager' => array(
-        'template_path_stack' => array(
-            'Market' => __DIR__ . '/../view',
-        ),
-    ),
-);
+                'child_routes' => [
+                    'view' => [
+                        'type'    => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => [
+                            'route'    => '/view',
+                            'defaults' => [
+                                'controller'    => 'market-view-controller',
+                                'action'        => 'index',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'index' => [
+                                'type'    => 'Zend\Mvc\Router\Http\Segment',
+                                'options' => [
+                                    'route'    => '/main[/:category]',
+                                    'defaults' => [
+                                        'action' => 'index',
+                                    ],
+                                    'constraints' => [
+                                        'category' => '[a-zA-Z]*',
+                                    ],
+                                ],
+                            ],
+                            'item' => [
+                                'type'    => 'Zend\Mvc\Router\Http\Segment',
+                                'options' => [
+                                    'route'    => '/item[/:itemId]',
+                                    'defaults' => [
+                                        'action'        => 'item',
+                                    ],
+                                    'constraints' => [
+                                        'itemId' => '[0-9]*',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'post' => [
+                        'type'    => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => [
+                            'route'    => '/post',
+                            'defaults' => [
+                                'controller'    => 'market-post-controller',
+                                'action'        => 'index',
+                            ],
+                        ],
+                    ],
+                    'delete' => [
+                        'type'    => 'Zend\Mvc\Router\Http\Segment',
+                        'options' => [
+                            'route'    => '/delete',
+                            'defaults' => [
+                                'controller'    => 'market-delete-controller',
+                                'action'        => 'index',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'confirm' => [
+                                'type'    => 'Zend\Mvc\Router\Http\Segment',
+                                'options' => [
+                                    'route'    => '/confirm[/:itemId[/:delCode]]',
+                                    'defaults' => [
+                                        'action' => 'confirm',
+                                    ],
+                                    'constraints' => [
+                                        'itemId'  => '[0-9]*',
+                                        'delCode' => '[0-9]*',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'view_helpers' => [
+        'invokables' => [
+            'leftLinks' => 'Market\Helper\LeftLinks',    
+        ], 
+    ],
+    'view_manager' => [
+        'template_map' => include __DIR__ . '/../template_map.php',
+    ],
+];

@@ -69,10 +69,13 @@ return array(
         'shared' => array(
             'application-date' => FALSE,
         ),
+        'aliases' => array(
+            'categories' => 'application-categories',
+        ),
         'services' => array(
             'application-who-wins' => 'WHO WINS: ' . __FILE__,    
             'application-who-adds' => ['B' => 'WHO ADDS: ' . __FILE__],    
-            'categories' => [
+            'application-categories' => [
                 'barter',
                 'beauty',
                 'clothing',
