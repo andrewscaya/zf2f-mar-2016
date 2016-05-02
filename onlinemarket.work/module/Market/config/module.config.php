@@ -1,12 +1,21 @@
 <?php
 return [
     'controllers' => [
+        /*'invokables' => [
+            'market-index-controller'  => 'Market\Controller\IndexController',
+            'market-view-controller'   => 'Market\Controller\ViewController',
+            'market-post-controller'   => 'Market\Controller\PostController',
+            'market-delete-controller' => 'Market\Controller\DeleteController',
+        ],*/
         'factories' => [
             'market-index-controller'  => 'Market\Factory\IndexControllerFactory',
             'market-view-controller'   => 'Market\Factory\ViewControllerFactory',
             'market-post-controller'   => 'Market\Factory\PostControllerFactory',
             'market-delete-controller' => 'Market\Factory\DeleteControllerFactory',
         ],
+        /*'aliases' => [
+            'alt' => 'market-view-controller',
+        ],*/
     ],
     'service_manager' => [
         'factories' => [

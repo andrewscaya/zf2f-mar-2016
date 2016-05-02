@@ -19,6 +19,7 @@ class ViewController extends AbstractActionController
     public function indexAction()
     {
         $category = $this->params()->fromRoute('category');
+        //$list = $this->adapter->query('SELECT * FROM listings WHERE category = ?', [$category]);
         $list = $this->getListingsTable()->getListingsByCategory($category);
         return new ViewModel(['category' => $category, 'list' => $list]);
     }
