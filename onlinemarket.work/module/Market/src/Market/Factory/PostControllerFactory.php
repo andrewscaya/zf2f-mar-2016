@@ -7,9 +7,9 @@ use Market\Controller\PostController;
 
 class PostControllerFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $controllerManager)
     {
-        $sm = $serviceLocator->getServiceLocator();
+        $sm = $controllerManager->getServiceLocator();
         $controller = new PostController();
         $categories = $sm->get('application-categories');
         $controller->setCategories($categories);

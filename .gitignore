@@ -1,3 +1,12 @@
 data/
 vendor/
+*/vendor/
+vendor
+*/vendor
+.settings/
+*/.settings/
 .project
+*/.project
+.buildpath
+*/.buildpath
+

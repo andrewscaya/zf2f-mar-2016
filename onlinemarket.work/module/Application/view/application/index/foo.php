@@ -1,3 +1,5 @@
+<?php //echo $this->topLeft; ?>
+<?php //echo $this->lowerLeft; ?>
 <?php echo $this->partial('application/widgets/top_left'); ?>
 <?php echo $this->partial('application/widgets/lower_left'); ?>
 <br>

@@ -21,5 +21,28 @@ class ListingsTable extends TableGateway
     {
         return $this->select(['listings_id' => $id])->current();
     }
+    
+    //From Andrew
+    public function getMostRecentListing()
+    {
+        $select = new Select();
+    
+        $select->from($this->getTableName());
+    
+        $sqlExpression = new Expression('MAX(`listings_id`)');
+    
+        $subSelect = new Select();
+    
+        $subSelect->from($this->getTableName())
+        ->columns([$sqlExpression]);
+    
+        $where = new Where();
+    
+        $where->in('listings_id', ['listings_id' => $subSelect]);
+    
+        $select->where($where);
+    
+        return $this->selectWith($select)->current();
+    }
 
 }

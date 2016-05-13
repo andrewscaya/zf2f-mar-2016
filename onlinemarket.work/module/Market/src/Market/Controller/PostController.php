@@ -19,6 +19,8 @@ class PostController extends AbstractActionController
     use ListingsTableTrait;
     public function indexAction()
     {
+        //return new ViewModel(['categories' => $this->categories]);
+        
         $data = array();
         if ($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();

@@ -21,10 +21,22 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        $eventManager->attach(MvcEvent::EVENT_DISPATCH, [$this, 'onDispatch'], 100);
+        
+        /* Corresponding code : Test\Module.php on line 20. */
+        //$eventManager->attach('whatever', function ($e) { echo '<br /><h1>WHATEVER' . $e->getParam('abc') . '</h1>'; });
+        //$eventManager->trigger('someotherevent', $this);
+        
+        /* Corresponding code : Application\Controller\IndexController.php on line 29. */ 
         //$sharedMgr = $eventManager->getSharedManager();
+        //$sharedMgr->attach('xyz', 'whatever', function ($e) { echo '<br /><h1>WHATEVER' . $e->getParam('abc') . '</h1>'; });
+        
+        /* Corresponding code : if setIdentifiers() is not set in Application\Controller\IndexController.php on line 29. */
         //$sharedMgr->attach('*', 'whatever', [$this, 'whateverListener']);
+        
+        /* Corresponding code : Application\Controller\IndexController.php on line 31. */
         GlobalEventManager::attach('whatever', [$this, 'whateverListener']);
+        
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH, [$this, 'onDispatch'], 100);
     }
 
     public function whateverListener($e)

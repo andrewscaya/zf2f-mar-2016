@@ -37,6 +37,7 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
+                            //'route'    => '/[:controller[/:action]',
                             'route'    => '[/:action]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -62,6 +63,11 @@ return array(
         ),
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
+            /* Cannot cache an anonymous function within a config file.
+             * 'config_cache_enabled' => TRUE in application.config.php on line 39.
+             * Anonymous function added to Application/Module.php's getServiceConfig() method. 
+             */  
+            //'application-test' => function ($sm) { return 2+2; },
         ),
         'invokables' => array(
             'application-date' => 'DateTime',
@@ -117,8 +123,15 @@ return array(
         'doctype'                  => 'HTML5',
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
+        /*'template_map' => array(
+            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            'error/404'               => __DIR__ . '/../view/error/404.phtml',
+            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'application/index/foo'   => __DIR__ . '/../view/scripts/something/foo.phtml',
+        ),*/
         'template_map'             => include __DIR__ . '/../template_map.php',
-        'template_path_stack' => array(
+        'template_path_stack'      => array(
             __DIR__ . '/../view',
         ),
     ),

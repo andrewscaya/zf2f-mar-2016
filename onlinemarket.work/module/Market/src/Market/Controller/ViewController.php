@@ -18,7 +18,10 @@ class ViewController extends AbstractActionController
     use ListingsTableTrait;
     public function indexAction()
     {
+        //$category = $this->params()->fromQuery('category');
         $category = $this->params()->fromRoute('category');
+        //$list = $this->adapter->query('SELECT * FROM listings WHERE category = ?', [$category]);
+        //$list = $this->getListingsTable()->select(['category' => $category]);
         $list = $this->getListingsTable()->getListingsByCategory($category);
         return new ViewModel(['category' => $category, 'list' => $list]);
     }
